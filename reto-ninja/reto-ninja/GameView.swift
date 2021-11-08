@@ -5,7 +5,7 @@ struct GameView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @State var scene: SKScene = GameScene() 
+    @State var scene: SKScene = GameScene()
     
     var body: some View {
         ZStack {
@@ -18,7 +18,7 @@ struct GameView: View {
             AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeRight
             UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
             UIViewController.attemptRotationToDeviceOrientation()
-            scene = SKScene(fileNamed: "GameScene.sks")!
+            scene = GameScene()
             scene.scaleMode = .aspectFit
             scene.size = CGSize(width: 926, height: 444)
             scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)

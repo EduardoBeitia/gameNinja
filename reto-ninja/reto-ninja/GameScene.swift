@@ -1,7 +1,7 @@
 //
 import SwiftUI
 import SpriteKit
-import GameKit
+import GameplayKit
 
 func +(left: CGPoint, right: CGPoint) -> CGPoint {
   return CGPoint(x: left.x + right.x, y: left.y + right.y)
@@ -50,8 +50,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   let score = SKLabelNode(fontNamed: "Chalkduster")
 
 
-  override func didMove(to view: SKView) {
+  
     
+  override func didMove(to view: SKView) {
+
     self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     print("Start")
     let background = SKSpriteNode(imageNamed: "WallpaperNinja")
@@ -59,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     background.zPosition = 1
     addChild(background)
 
-    player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
+    player.position = CGPoint(x: -400, y: 0.5)
     player.zPosition = 5
 
     addChild(player)
@@ -76,13 +78,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     score.fontSize = 30
     score.fontColor = SKColor.black
-    score.position = CGPoint(x: size.width/2, y: size.height/2)
+    score.position = CGPoint(x: 0.5, y: 0.5)
+    score.zPosition = 2
     addChild(score)
 
   }
 
   func random() -> CGFloat {
-    return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    return CGFloat(Float(arc4random())  / 0xFFFFFFFF)
   }
 
   func random(min: CGFloat, max: CGFloat) -> CGFloat {
@@ -100,7 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     monster.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
     monster.zPosition = 5
 
-    let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+    let actualY = random(min: -200, max: 200)
 
     monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
 
@@ -111,7 +114,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
 
 
-    let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
+    let actionMove = SKAction.move(to: CGPoint(x: -400, y: actualY), duration: TimeInterval(actualDuration))
     let actionMoveDone = SKAction.removeFromParent()
     let loseAction = SKAction.run() { [weak self] in
       guard let `self` = self else { return }
@@ -201,16 +204,3 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 }
-
-
-// test
-//class GameScene: SKScene{
-//
-//    override func didMove(to view: SKView) {
-//        print("Start")
-//        let background = SKSpriteNode(imageNamed: "WallpaperNinja")
-//        background.size = CGSize(width: 926, height: 444)
-//        background.zPosition = 0
-//        addChild(background)
-//    }
-//}
